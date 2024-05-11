@@ -20,3 +20,14 @@ function getCookie(cname) {
     }
     return "";
 }
+
+function acceptCookies() {
+    $(".cookie-warning").remove();
+    setCookie("acceptedCookies", "true", 5);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    if (getCookie("acceptedCookies") == "true") {
+        acceptCookies();
+    }
+});
