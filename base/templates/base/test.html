@@ -7,6 +7,10 @@
   <script type="module" src="https://md-block.verou.me/md-block.js"></script>
 {% endblock %}
 
+{% block testname %}
+  {{ test.test }}
+{% endblock %}
+
 {% block main %}
   <section class="meter-section">
     <div class="legend">
@@ -26,7 +30,10 @@
   </section>
 
   <section class="startquiz-section">
-    <button onclick="startQuiz()" type="button">Start Quizz</button>
+    <form onsubmit="startQuiz(); return false;">
+      <label class="max-questions">Maximum Number Of Questions:&nbsp;<input type="number" value="30" min="5" max="500" name="max-questions" required /></label>
+      <button type="submit">Start Quizz</button>
+    </form>
   </section>
 
   <section class="question-section" style="display:none">
@@ -46,9 +53,11 @@
 
   <section class="results-section" style="display:none">
     <div class="outer-pie">
-      <div class="inner-pie">
-        <h2>You Are <span class="cooked-percent">50</span>% Cookified!</h2>
-        <button type="button" onclick="tryAgain()">Try Again</button>
+      <div class="outer-pie-cut">
+        <div class="inner-pie">
+          <h2>You Are <span class="cooked-percent">50</span>% Cookified!</h2>
+          <button type="button" onclick="tryAgain()">Try Again</button>
+        </div>
       </div>
     </div>
   </section>

@@ -1,18 +1,35 @@
 var Correct = 0;
 var Incorrect = 0;
-const TOTAL_NUMBER_OF_QUESTIONS = 7;
+var TotalNumberOfQuestions;
 
 async function startQuiz() {
     $(".startquiz-section").css("display", "none");
+
+    let $info = await $.getJSON(`/${getCookie("test")}/get-test-info/`)
+        .fail(() => {
+            alert("Failed to load quiz. Please reload page or try again later.");
+            return;
+        });
+
+    TotalNumberOfQuestions = Math.min(
+        $info["totalquestions"],
+        parseInt($(".max-questions input").val())
+    );
+
     setCookie("questions", "", 1);
-    await loadNextQuestion();
-    $(".question-section").css("display", "");
+    if (TotalNumberOfQuestions) {
+        await loadNextQuestion();
+        $(".question-section").css("display", "");
+    }
+    else {
+
+        alert("Sorry, this test doesn't have any questions yet!");
+    }
 }
 
-
 async function loadNextQuestion() {
-    let $data = await $.getJSON('/get-question/')
-        .fail(function () { alert('Failed to load next question. Please reload the page and try again later.'); });
+    let $data = await $.getJSON(`/${getCookie("test")}/get-question/`)
+        .fail(() => { alert('Failed to load next question. Please reload the page and or again later.'); });
 
     setCookie("questions", `${getCookie("questions")},${$data["id"]}`, 1);
 
@@ -32,8 +49,8 @@ async function loadNextQuestion() {
 
     let total = Correct + Incorrect;
 
-    $(".question-count").text(`Question #${total + 1} of ${TOTAL_NUMBER_OF_QUESTIONS}`);
-    if (total == TOTAL_NUMBER_OF_QUESTIONS - 1)
+    $(".question-count").text(`Question #${total + 1} of ${TotalNumberOfQuestions}`);
+    if (total == TotalNumberOfQuestions - 1)
         $(".submit-question").text("Finish Test");
 }
 
@@ -43,7 +60,7 @@ async function submitQuestion() {
 
 
     $button.attr("disabled", "disabled");
-    $button.css("background-color", "var(--red)");
+    $button.css("filter", "brightness(50%)");
     if ($checked.val() == "true") {
         $checked.closest("label").css("background-color", "var(--green)");
         Correct += 1;
@@ -59,25 +76,29 @@ async function submitQuestion() {
     adjustCookedMeter();
 
     setTimeout(async () => {
-        if (Correct + Incorrect < TOTAL_NUMBER_OF_QUESTIONS)
-            await loadNextQuestion();
-        else
-            showResultsScreen();
+        if (Correct + Incorrect < TotalNumberOfQuestions) {
 
-        $button.removeAttr("disabled");
-        $button.css("background-color", "var(--green)");
+            await loadNextQuestion();
+            $button.removeAttr("disabled");
+            $button.css("filter", "");
+        }
+        else {
+            showResultsScreen();
+        }
+
     }, 1000);
 }
 
 function showResultsScreen() {
-    $(".question-section").addClass("go-out");
-    $(".meter-section").addClass("go-out");
-    $(".results-section").css("display", "");
-
     let $outerPie = $(".outer-pie");
-
-    let cookedPercent = Incorrect / (Correct + Incorrect) * 100;
+    let cookedPercent = Incorrect / TotalNumberOfQuestions * 100;
     $outerPie.css("--cooked-percent", `${cookedPercent}%`);
+
+    window.setTimeout(() => {
+        $(".question-section").css("display", "none");
+        $(".meter-section").css("display", "none");
+        $(".results-section").css("display", "");
+    }, 1000);
 }
 
 function adjustCookedMeter() {

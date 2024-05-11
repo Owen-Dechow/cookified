@@ -7,7 +7,6 @@ main {
     .fineprint-section {
         border: 1px solid;
         padding: 5px;
-        font-size: .8rem;
     }
 
     .fineprint-section p {
@@ -21,18 +20,27 @@ main {
 
 
     .outer-pie {
-        --pie-percent: 70%;
-
-        width: min(200px, 100%);
+        width: min(300px, 100%);
         aspect-ratio: 1/1;
         border-radius: 50%;
-        background-image: conic-gradient(var(--green) 0 var(--pie-percent), var(--background) var(--pie-percent) 100%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        background-image: conic-gradient(var(--green), var(--yellow), var(--red) 25%);
         margin-inline: auto;
         margin-top: 40px;
         margin-bottom: 20px;
+        border: 1px solid
+    }
+
+    .outer-pie-cut {
+        --pie-percent: 70%;
+        width: 100%;
+        aspect-ratio: 1/1;
+
+        background-image: conic-gradient(transparent 0 var(--pie-percent), var(--focused-background) var(--pie-percent) 100%);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
     }
 
     .inner-pie {
@@ -41,6 +49,7 @@ main {
         background-color: var(--background);
         border-radius: 50%;
         font-size: 2rem;
+        border: 1px solid;
         text-align: center;
 
         display: flex;
@@ -49,15 +58,29 @@ main {
         justify-content: center;
     }
 
-    .inner-pie a {
-        background-color: var(--red);
+
+
+    .inner-pie select,
+    .inner-pie button {
         border: 1px solid;
         color: var(--text);
-        font-size: 1rem;
         padding: 5px;
         border-radius: 5px;
-        width: 100%;
-        margin-top: 10px;
+        margin: 0;
         text-decoration: none;
+    }
+
+    .inner-pie button {
+        background-color: var(--red);
+    }
+
+    .inner-pie select {
+        background-color: var(--green)
+    }
+
+    .inner-pie p {
+        margin: 3px;
+        display: flex;
+        gap: 5px;
     }
 }

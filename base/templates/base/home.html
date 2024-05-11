@@ -13,8 +13,21 @@
 
   <section class="taketest-section">
     <div class="outer-pie">
-      <div class="inner-pie">
-        <a href="/test">Take The Test</a>
+      <div class="outer-pie-cut">
+        <form class="inner-pie" action="/select-test/" method="get">
+          <p>
+            <span>Take The</span>
+            <select name="test">
+              {% for test in tests %}
+                <option value="{{ test.id }}">{{ test.test }}</option>
+              {% endfor %}
+            </select>
+          </p>
+          <p>
+            Test
+            <button type="submit">Now!</button>
+          </p>
+        </form>
       </div>
     </div>
   </section>
