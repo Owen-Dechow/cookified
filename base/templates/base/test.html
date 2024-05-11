@@ -4,6 +4,7 @@
 {% block head %}
   <link rel="stylesheet" type="text/css" href="{% static 'base/css/test.css' %}" />
   <script src="{% static 'base/js/test.js' %}"></script>
+  <script type="module" src="https://md-block.verou.me/md-block.js"></script>
 {% endblock %}
 
 {% block main %}
@@ -30,11 +31,12 @@
 
   <section class="question-section" style="display:none">
     <p class="question-count">Question #1 of 1</p>
-    <p class="question">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad sit dolorem deleniti voluptates in saepe culpa enim perferendis voluptate ullam, reprehenderit itaque laudantium accusantium nam delectus et error illum placeat.</p>
+    <md-block class="question">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad sit dolorem deleniti voluptates in saepe culpa enim perferendis voluptate ullam, reprehenderit itaque laudantium accusantium nam delectus et error illum placeat.</md-block>
     <form>
       <li class="option-template option" style="display:none">
         <Label>
-          <input type="radio" name="answer" class="answer" /><span class="option-text">Lorem</span>
+          <input type="radio" name="answer" class="answer" />
+          <md-span class="option-text">Lorem</md-span>
         </Label>
       </li>
       <ul class="options"></ul>

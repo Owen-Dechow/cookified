@@ -1,8 +1,8 @@
-import time
-from random import random, randrange
+from random import randrange
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.core.handlers.wsgi import WSGIRequest
+from . import models
 
 
 # Create your views here.
@@ -16,16 +16,23 @@ def test(request: WSGIRequest):
 
 def get_question(request: WSGIRequest):
     questions_answered = [int(x) for x in request.COOKIES["questions"].split(",") if x]
-    time.sleep(random())
-    return JsonResponse(
-        {
-            "id": randrange(1, 100),
-            "question": "This is some text",
-            "options": [
-                [f"{randrange(1, 100)}", True],
-                [f"{randrange(1, 100)}", False],
-                [f"{randrange(1, 100)}", False],
-                [f"{randrange(1, 100)}", False],
-            ],
-        }
+
+    question = (
+        models.Question.objects.order_by("?").exclude(id__in=questions_answered).first()
     )
+
+    options = models.Answer.objects.filter(question=question.id)
+
+    json_options = []
+    for option in options:
+        json_options.insert(
+            randrange(0, len(json_options) + 1), [option.answer, option.correct]
+        )
+
+    json_question = {
+        "id": question.id,
+        "question": question.question,
+        "options": json_options,
+    }
+
+    return JsonResponse(json_question)

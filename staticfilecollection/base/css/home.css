@@ -1,0 +1,63 @@
+main {
+    .main-section {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .fineprint-section {
+        border: 1px solid;
+        padding: 5px;
+        font-size: .8rem;
+    }
+
+    .fineprint-section p {
+        margin: 0;
+        padding: 5px;
+    }
+
+    .fineprint-section a {
+        color: var(--text);
+    }
+
+
+    .outer-pie {
+        --pie-percent: 70%;
+
+        width: min(200px, 100%);
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background-image: conic-gradient(var(--green) 0 var(--pie-percent), var(--background) var(--pie-percent) 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-inline: auto;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+
+    .inner-pie {
+        width: calc(100% - 50px);
+        aspect-ratio: 1/1;
+        background-color: var(--background);
+        border-radius: 50%;
+        font-size: 2rem;
+        text-align: center;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .inner-pie a {
+        background-color: var(--red);
+        border: 1px solid;
+        color: var(--text);
+        font-size: 1rem;
+        padding: 5px;
+        border-radius: 5px;
+        width: 100%;
+        margin-top: 10px;
+        text-decoration: none;
+    }
+}

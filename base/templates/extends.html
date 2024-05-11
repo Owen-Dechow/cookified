@@ -30,6 +30,11 @@
       <span>No cookies are used for the collection of personal data.</span>
       <span>By using this website you are accepting these cookies.</span>
       <button type="button" onclick="acceptCookies()">Accept Cookies</button>
+      <script>
+        if (getCookie('acceptedCookies') == 'true') {
+          acceptCookies()
+        }
+      </script>
     </div>
     <main>
       {% block main %}
