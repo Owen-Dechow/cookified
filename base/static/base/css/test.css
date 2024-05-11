@@ -1,0 +1,160 @@
+@keyframes come-in {
+    from {
+        filter: opacity(0);
+        transform: rotate(0) scale(0);
+    }
+
+    to {
+        filter: opacity(1);
+        transform: rotate(2turn) scale(1);
+    }
+}
+
+@keyframes go-out {
+    99.9% {
+        transform: translateY(-200%);
+        filter: opacity(0);
+    }
+
+    100% {
+        display: none;
+    }
+}
+
+main {
+    button {
+        color: var(--text);
+        padding: 5px;
+        border: 1px solid;
+        border-radius: 5px;
+        font-weight: bold;
+        background-color: var(--green);
+        width: 100%;
+    }
+
+    .meter-section {
+        padding: 20px;
+    }
+
+    .legend {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .meter {
+        --size: 20px;
+        width: 100%;
+        max-width: calc(100% - 80px);
+        margin-inline: auto;
+        height: var(--size);
+        background-image: linear-gradient(90deg, var(--green), var(--yellow), var(--red));
+        border-radius: var(--size);
+        border: 1px solid;
+        margin-bottom: 5em;
+    }
+
+    .slide {
+        --cooked-percent: 50%;
+
+        position: relative;
+        left: var(--cooked-percent);
+        top: -5px;
+        translate: -50% 0;
+
+        display: grid;
+        justify-items: center;
+        width: min-content;
+        text-align: center;
+
+        transition: left 1s;
+    }
+
+    .dot {
+        width: calc(var(--size) + 10px);
+        aspect-ratio: 1/1;
+        border: 1px solid;
+        border-radius: 50%;
+        backdrop-filter: blur(7px);
+    }
+
+    .options {
+        list-style: none;
+    }
+
+    .option label {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .option label:hover {
+        background-color: var(--focused-background);
+    }
+
+    .option label:has(*:checked) {
+        border: 1px solid;
+    }
+
+    .outer-pie {
+        --cooked-percent: 70%;
+
+        width: min(500px, 100%);
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background-image: conic-gradient(var(--red) 0 var(--cooked-percent), var(--background) var(--cooked-percent) 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-inline: auto;
+        margin-top: 40px;
+
+        filter: opacity(0);
+        animation-name: come-in;
+        animation-duration: 2s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+        animation-delay: 2s;
+    }
+
+    .inner-pie {
+        width: calc(100% - 100px);
+        aspect-ratio: 1/1;
+        background-color: var(--background);
+        border-radius: 50%;
+        font-size: 2rem;
+        text-align: center;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .inner-pie h2 {
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    @media only screen and (max-width: 25rem) {
+        .inner-pie {
+            width: calc(100% - 50px);
+            font-size: 1.5rem;
+        }
+    }
+
+    .go-out {
+        animation-name: go-out;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+        animation-duration: 2s;
+    }
+
+    .question-count {
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: .8rem;
+    }
+}

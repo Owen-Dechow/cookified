@@ -1,0 +1,53 @@
+{% extends 'extends.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'base/css/test.css' %}" />
+  <script src="{% static 'base/js/test.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+  <section class="meter-section">
+    <div class="legend">
+      <p>Chillin'</p>
+      <p>Cookified</p>
+    </div>
+    <div class="meter">
+      <div class="slide">
+        <div class="dot"></div>
+        <div class="text">
+          <p>
+            You Are <span class="cooked-percent">50</span>% Cookified!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="startquiz-section">
+    <button onclick="startQuiz()" type="button">Start Quizz</button>
+  </section>
+
+  <section class="question-section" style="display:none">
+    <p class="question-count">Question #1 of 1</p>
+    <p class="question">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad sit dolorem deleniti voluptates in saepe culpa enim perferendis voluptate ullam, reprehenderit itaque laudantium accusantium nam delectus et error illum placeat.</p>
+    <form>
+      <li class="option-template option" style="display:none">
+        <Label>
+          <input type="radio" name="answer" class="answer" /><span class="option-text">Lorem</span>
+        </Label>
+      </li>
+      <ul class="options"></ul>
+      <button class="submit-question" type="button" onclick="submitQuestion()">Next</button>
+    </form>
+  </section>
+
+  <section class="results-section" style="display:none">
+    <div class="outer-pie">
+      <div class="inner-pie">
+        <h2>You Are <span class="cooked-percent">50</span>% Cookified!</h2>
+        <button type="button" onclick="tryAgain()">Try Again</button>
+      </div>
+    </div>
+  </section>
+{% endblock %}
