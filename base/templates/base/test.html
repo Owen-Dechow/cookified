@@ -32,7 +32,7 @@
   <section class="startquiz-section">
     <form onsubmit="startQuiz(); return false;">
       <label class="max-questions">Maximum Number Of Questions:&nbsp;<input type="number" value="30" min="5" max="500" name="max-questions" required /></label>
-      <button type="submit">Start Quizz</button>
+      <button type="submit">Start Quiz</button>
     </form>
   </section>
 
@@ -55,7 +55,9 @@
     <div class="outer-pie">
       <div class="outer-pie-cut">
         <div class="inner-pie">
+          {% csrf_token %}
           <h2>You Are <span class="cooked-percent">50</span>% Cookified!</h2>
+          <p class="score-comparison-msg"></p>
           <button type="button" onclick="tryAgain()">Try Again</button>
         </div>
       </div>

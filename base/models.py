@@ -7,6 +7,8 @@ class Test(models.Model):
         return self.test
 
     test = models.CharField(max_length=200)
+    average_score = models.FloatField(default=0)
+    score_count = models.IntegerField(default=0)
 
 
 class Question(models.Model):

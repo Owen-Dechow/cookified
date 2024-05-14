@@ -95,6 +95,28 @@ function showResultsScreen() {
     $outerPie.css("--cooked-percent", `${cookedPercent}%`);
 
     window.setTimeout(() => {
+        $.post(`/average-score/`, {
+            test: getCookie("test"),
+            score: cookedPercent,
+            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+        }, (data) => {
+            let difference = data["average"] - cookedPercent;
+            let roundedAverage = Math.round(data["average"]);
+            let standardDifference = Math.round(Math.abs(difference));
+            let $messageText = $(".score-comparison-msg");
+
+            if (difference > 0)
+                $messageText.text(`Congrates! You Are ${standardDifference}% Less Cookified Than The Average Of ${roundedAverage}% Cookified`);
+            else if (difference < 0)
+                $messageText.text(`Oh No! You Are ${standardDifference}% More Cookified Than The Average Of ${roundedAverage}% Cookified`);
+            else
+                $messageText.text(`You Are An Average Test Taker Of Score ${roundedAverage}% Cookified`);
+
+
+
+
+        }, "json").fail(() => { alert("Failed to calculate averages."); });
+
         $(".question-section").css("display", "none");
         $(".meter-section").css("display", "none");
         $(".results-section").css("display", "");

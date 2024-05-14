@@ -137,6 +137,11 @@ main {
         margin-bottom: 10px;
     }
 
+    .inner-pie p {
+        font-size: 1rem;
+        margin: 10px
+    }
+
     @media only screen and (max-width: 25rem) {
         .inner-pie {
             width: calc(100% - 50px);

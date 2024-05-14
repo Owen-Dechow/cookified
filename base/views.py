@@ -3,6 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core.handlers.wsgi import WSGIRequest
 from . import models
+from django.db import transaction
+from . import forms
 
 
 # Create your views here.
@@ -59,3 +61,23 @@ def get_test_info(request: WSGIRequest, test: int):
 def select_test(request: WSGIRequest):
     test = get_object_or_404(models.Test, id=request.GET.get("test"))
     return HttpResponseRedirect(f"/{test.id}/test/")
+
+
+@transaction.atomic
+def average_score(request: WSGIRequest):
+    form = forms.AverageScoreForm(request.POST)
+    if form.is_valid():
+        test = get_object_or_404(models.Test, id=form.cleaned_data["test"])
+
+        pre_total = test.average_score * test.score_count
+        total_scores = form.cleaned_data["score"] + pre_total
+        average_score = total_scores / (test.score_count + 1)
+
+        test.average_score = average_score
+        test.score_count += 1
+        test.save()
+
+        return JsonResponse({"average": average_score})
+
+    else:
+        raise Http404("Invalid score average request")
