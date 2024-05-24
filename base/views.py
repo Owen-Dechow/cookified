@@ -63,6 +63,10 @@ def select_test(request: WSGIRequest):
     return HttpResponseRedirect(f"/{test.id}/test/")
 
 
+def infographic(request: WSGIRequest):
+    return render(request, "base/infographic.html")
+
+
 @transaction.atomic
 def average_score(request: WSGIRequest):
     form = forms.AverageScoreForm(request.POST)

@@ -8,4 +8,5 @@ urlpatterns = [
     path("<int:test>/get-test-info/", views.get_test_info),
     path("select-test/", views.select_test),
     path("average-score/", views.average_score),
+    path("infographic/", views.infographic),
 ]
